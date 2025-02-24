@@ -8,16 +8,49 @@ import {
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { Button } from './ui/button';
-import { useSearchParams } from 'next/navigation';
+import { Auth} from '@/types/auth';
+import { useState } from 'react';
+import { signup } from '@/services/auth';
+import { useRouter } from "next/navigation"; 
+
+type SignupData = Auth & {
+  passwordConfirm: string;}
 
 export default function SignupForm() {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const router = useRouter();
+  const [error,setError] = useState("");
+
+  const [formData, setFormData] = useState<SignupData>({
+    email: "",
+    password: "",
+    passwordConfirm:""
+  });
   
-  const errorMessage = null;
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if(formData.password === formData.passwordConfirm){
+      const result = await signup(formData);
+      if(result.data){
+        router.push('/signin');
+      }
+      if(result.error){
+        setError(result.error)
+      }
+      
+    }
+  };
   
   return (
-    <form className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please signup to Nextjs App.
@@ -36,6 +69,8 @@ export default function SignupForm() {
                 id="email"
                 type="email"
                 name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="Enter your email address"
                 required
               />
@@ -55,6 +90,8 @@ export default function SignupForm() {
                 id="password"
                 type="password"
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Enter password"
                 required
                 minLength={6}
@@ -76,6 +113,8 @@ export default function SignupForm() {
                 type="password"
                 name="passwordConfirm"
                 placeholder="Enter password"
+                value={formData.passwordConfirm}
+                onChange={handleChange}
                 required
                 minLength={6}
               />
@@ -83,16 +122,15 @@ export default function SignupForm() {
             </div>
           </div>
         </div>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
         <Button className="mt-4 w-full">
           Sign up <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
         </Button>
         <div className="flex h-8 items-end space-x-1">
           {/* Add form errors here */}
-          {errorMessage && (
+          {error && (
             <>
               <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-              <p className="text-sm text-red-500">{errorMessage}</p>
+              <p className="text-sm text-red-500">{error}</p>
             </>
           )}
         </div>

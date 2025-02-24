@@ -12,8 +12,6 @@ interface LoginRequest {
 export async function POST(req: Request) {
   const { email, password }: LoginRequest = await req.json();
 
-  console.log({email,password});
-
   const user = await Prisma.user.findUnique({ where: { email } });
   if (!user) return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
 
@@ -29,8 +27,6 @@ export async function POST(req: Request) {
     .setIssuedAt()
     .setExpirationTime('1h')
     .sign(secret);
-  
-  console.log(token);
 
   (await cookies()).set('token', token, { httpOnly: true, secure: true, path: '/' });
 

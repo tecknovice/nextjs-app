@@ -1,6 +1,7 @@
 import Logo from '@/components/ui/logo';
 import { Suspense } from 'react';
 import SignupForm from '@/components/signup-form';
+import Link from 'next/link';
  
 export default function Page() {
   return (
@@ -14,6 +15,9 @@ export default function Page() {
         <Suspense>
           <SignupForm />
         </Suspense>
+        <div className="flex h-8 items-end space-x-1 text-xs font-medium text-gray-500 underline">
+          <Link href={'/signin'}>Sign in</Link>
+        </div>
       </div>
     </main>
   );
