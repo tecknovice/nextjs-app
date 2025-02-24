@@ -1,24 +1,22 @@
-import Logo from '@/components/ui/logo';
-import SigninForm from '@/components/signin-form';
-import { Suspense } from 'react';
-import Link from 'next/link';
- 
+import { GalleryVerticalEnd } from "lucide-react"
+
+import { SigninForm } from "@/components/signin-form"
+import { Suspense } from "react"
+
 export default function Page() {
   return (
-    <main className="flex items-center justify-center md:h-screen">
-      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-          <div className="w-32 text-white md:w-36">
-            <Logo />
+    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <a href="#" className="flex items-center gap-2 self-center font-medium">
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <GalleryVerticalEnd className="size-4" />
           </div>
-        </div>
+          Acme Inc.
+        </a>
         <Suspense>
           <SigninForm />
         </Suspense>
-        <div className="flex h-8 items-end space-x-1 text-xs font-medium text-gray-500 underline">
-          <Link href={'/signup'}>Sign up</Link>
-        </div>
       </div>
-    </main>
-  );
+    </div>
+  )
 }
