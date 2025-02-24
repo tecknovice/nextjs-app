@@ -58,6 +58,7 @@ This project uses the following technologies:
 - **PostgreSQL**: A powerful, open-source object-relational database system.
 - **Prisma**: A next-generation ORM for Node.js and TypeScript.
 - **JWT**: JSON Web Tokens for secure authentication.
+- **shadcn/ui**: A component library for building user interfaces with Tailwind CSS.
 
 ## Learn More
 
