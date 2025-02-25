@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -12,14 +12,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import { useSearchParams } from 'next/navigation';
-import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation"
+import { useForm } from "react-hook-form"
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { signin } from '@/services/auth';
-import { useRouter } from 'next/navigation'
-import { useState } from 'react';
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { signin } from "@/services/auth"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 import Link from "next/link"
 
 const schema = z.object({
@@ -28,20 +28,19 @@ const schema = z.object({
     .string()
     .min(6, "Password must be at least 6 characters")
     .nonempty("Password is required"),
-});
+})
 
-type FormData = z.infer<typeof schema>; 
+type FormData = z.infer<typeof schema>
 
 export function SigninForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-
   const router = useRouter()
-  const [error,setError] = useState("");
+  const [error, setError] = useState("")
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard"
 
   const {
     register,
@@ -49,20 +48,19 @@ export function SigninForm({
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-  });
-  
+  })
+
   const onSubmit = async (data: FormData) => {
     // Handle API call or further actions
-    const result = await signin(data);
-    if(result.data){
+    const result = await signin(data)
+    if (result.data) {
       //redirect to dashboard
-      router.push(callbackUrl);
+      router.push(callbackUrl)
     }
-    if(result.error){
+    if (result.error) {
       setError(result.error)
     }
-  };  
-    
+  }
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -74,7 +72,7 @@ export function SigninForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} >
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
@@ -122,25 +120,23 @@ export function SigninForm({
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password"  {...register("password")} />
+                  <Input
+                    id="password"
+                    type="password"
+                    {...register("password")}
+                  />
                   {errors.password && <p>{errors.password.message}</p>}
                 </div>
                 <Button type="submit" className="w-full">
                   Login
                 </Button>
-                {error && (
-            
-              
-              <p className="text-sm text-red-500">{error}</p>
-            
-          )}
+                {error && <p className="text-sm text-red-500">{error}</p>}
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <Link href="/signup" className="underline underline-offset-4">
                   Sign up
                 </Link>
-                
               </div>
             </div>
           </form>

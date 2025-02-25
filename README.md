@@ -5,47 +5,48 @@
 To run this project, follow these steps:
 
 1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/tecknovice/nextjs-app.git
-    cd nextjs-app
-    ```
+
+   ```bash
+   git clone https://github.com/tecknovice/nextjs-app.git
+   cd nextjs-app
+   ```
 
 2. **Install dependencies:**
-    ```bash
-    pnpm install
-    ```
+
+   ```bash
+   pnpm install
+   ```
 
 3. **Add environment variables:**
 
-    Create a `.env` file in the root of your project and add the necessary environment variables
-    
-
+   Create a `.env` file in the root of your project and add the necessary environment variables
 
 4. **Run Prisma migrations:**
 
-    To set up the database schema, run the following command:
-    ```bash
-    pnpm prisma migrate dev
-    ```
+   To set up the database schema, run the following command:
+
+   ```bash
+   pnpm prisma migrate dev
+   ```
 
 5. **Run the development server:**
-    ```bash
-    pnpm dev
-    ```
 
-    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   pnpm dev
+   ```
 
-
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 6. **Build for production:**
-    ```bash
-    pnpm build
-    ```
+
+   ```bash
+   pnpm build
+   ```
 
 7. **Start the production server:**
-    ```bash
-    pnpm start
-    ```
+   ```bash
+   pnpm start
+   ```
 
 ## Technologies Used
 
